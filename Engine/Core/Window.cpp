@@ -29,7 +29,12 @@ namespace GraphicsEngine
             OutputDebugStringA("Failed to register a window class\n");
 
             // 메시지 박스 이용.
-            MessageBoxA(nullptr, "Failed to register a window", "Error", MB_OK);
+            MessageBoxA(
+                nullptr,
+                "Failed to register a window",
+                "Error",
+                MB_OK
+            );
 
             // 중단점 설정.
             __debugbreak();
@@ -69,7 +74,12 @@ namespace GraphicsEngine
             OutputDebugStringA("Failed to create a window class\n");
 
             // 메시지 박스 이용.
-            MessageBoxA(nullptr, "Failed to create a window", "Error", MB_OK);
+            MessageBoxA(
+                nullptr,
+                "Failed to create a window",
+                "Error",
+                MB_OK
+            );
 
             // 중단점 설정.
             __debugbreak();

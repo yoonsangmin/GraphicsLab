@@ -3,6 +3,7 @@
 // DirectX11 헤더.
 #include <d3d11.h>
 #include <dxgi.h>
+#include <memory>
 
 #include "../Core/Type.h"
 
@@ -12,6 +13,9 @@ namespace GraphicsEngine
     // RHI - Render Hardware Interface.
     class Renderer
     {
+        // 엔진 클래스 firend 선언.
+        friend class Engine;
+
     public:
         Renderer(uint32 width, uint32 height, HWND window);
         ~Renderer();
@@ -32,6 +36,12 @@ namespace GraphicsEngine
         // 뷰포트.
         D3D11_VIEWPORT viewport;
 
+        // 쉐이더 객체.
+        //std::unique_ptr<class Shader> shader;
+        
+        // 삼각형 메시 객체.
+        std::unique_ptr<class Mesh> mesh;
+
         // @Temp: 임시.
         // 정점 버퍼 (정점 정보를 전달하는 데 사용함).
         ID3D11Buffer* vertexBuffer = nullptr;
@@ -39,11 +49,11 @@ namespace GraphicsEngine
         // 인덱스 버퍼 (정점을 조립할 때 정점의 순서를 전달).
         ID3D11Buffer* indexBuffer = nullptr;
 
-        // 입력 레이아웃.
-        ID3D11InputLayout* inputlayout = nullptr;
+        //// 입력 레이아웃.
+        //ID3D11InputLayout* inputlayout = nullptr;
 
-        // 쉐이더 객체.
-        ID3D11VertexShader* vertexShader = nullptr;
-        ID3D11PixelShader* pixelShader = nullptr;
+        //// 쉐이더 객체.
+        //ID3D11VertexShader* vertexShader = nullptr;
+        //ID3D11PixelShader* pixelShader = nullptr;
     };
 }

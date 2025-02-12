@@ -3,6 +3,7 @@
 #include <memory>
 #include <string>
 #include <Windows.h>
+#include <d3d11.h>
 #include "Type.h"
 
 namespace GraphicsEngine
@@ -23,7 +24,12 @@ namespace GraphicsEngine
         // 싱글톤 접근 함수.
         static Engine& Get();
 
+        // Getter.
+        ID3D11Device& Device() const;
+        ID3D11DeviceContext& Context() const;
+
     protected:
+
         // 창 객체.
         std::shared_ptr<class Window> window;
 

@@ -4,6 +4,7 @@
 
 namespace GraphicsEngine
 {
+    // 싱글톤 객체 설정.
     Engine* Engine::instance = nullptr;
 
     Engine::Engine(uint32 width, uint32 height, const std::wstring& title, HINSTANCE hInstance)
@@ -67,5 +68,15 @@ namespace GraphicsEngine
     Engine& Engine::Get()
     {
         return *instance;
+    }
+
+    ID3D11Device& Engine::Device() const
+    {
+        return *renderer->device;
+    }
+
+    ID3D11DeviceContext& Engine::Context() const
+    {
+        return *renderer->context;
     }
 }
