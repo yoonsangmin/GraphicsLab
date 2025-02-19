@@ -9,26 +9,16 @@ namespace GraphicsEngine
     {
         // 경로 추가.
         wchar_t path[256] = { };
-        swprintf_s(path, 256, TEXT("HLSLShader/%sVertexShader.hlsl"), name.c_str());
+        swprintf_s(path, 256, TEXT("../CompiledShader/%sVertexShader.cso"), name.c_str());
 
-        // 쉐이더 컴파일.
-        HRESULT result = D3DCompileFromFile(
-            path,
-            nullptr,
-            nullptr,
-            "main",
-            "vs_5_0",
-            0,
-            0,
-            &vertexShaderBuffer,
-            nullptr
-        );
+        // CSO 로드.
+        HRESULT result = D3DReadFileToBlob(path, &vertexShaderBuffer);
 
         if (FAILED(result))
         {
             MessageBoxA(
                 nullptr,
-                "Failed to compile vertex shader",
+                "Failed to read vertex shader object",
                 "Error",
                 MB_OK
             );
@@ -64,8 +54,10 @@ namespace GraphicsEngine
         D3D11_INPUT_ELEMENT_DESC inputDesc[] =
         {
             { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-            //{ "COLOR", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 }
-            { "COLOR", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+            //{ "COLOR", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+            { "COLOR", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+            //{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 24, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+            { "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 }
         };
 
         result = device.CreateInputLayout(
@@ -88,27 +80,18 @@ namespace GraphicsEngine
             __debugbreak();
         }
 
-        // 픽셀 쉐이더 컴파일/생성.
+        // 픽셀 쉐이더.
         // 각 리소스 바인딩.
-        // 쉐이더 컴파일.
-        swprintf(path, 256, TEXT("HLSLShader/%sPixelShader.hlsl"), name.c_str());
-        result = D3DCompileFromFile(
-            path,
-            nullptr,
-            nullptr,
-            "main",
-            "ps_5_0",
-            0u,
-            0u,
-            &pixelShaderBuffer,
-            nullptr
-        );
+        // CSO 로드.
+        swprintf(path, 256, TEXT("../CompiledShader/%sPixelShader.cso"), name.c_str());
+        
+        result = D3DReadFileToBlob(path, &pixelShaderBuffer);
 
         if (FAILED(result))
         {
             MessageBoxA(
                 nullptr,
-                "Failed to compile pixel shader",
+                "Failed to read pixel shader object",
                 "Error",
                 MB_OK
             );
