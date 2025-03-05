@@ -51,6 +51,21 @@
     <ClCompile Include="Shader\TextureMappingShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Resource\ShaderLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource\TextureLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader\DefaultShader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Matrix4.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Transform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Window.h">
@@ -98,9 +113,34 @@
     <ClInclude Include="Shader\TextureMappingShader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Core\Common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource\ShaderLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource\TextureLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader\DefaultShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Matrix4.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Transform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="HLSLShader\DefaultPixelShader.hlsl" />
     <FxCompile Include="HLSLShader\DefaultVertexShader.hlsl" />
+    <FxCompile Include="HLSLShader\TextureMappingPixelShader.hlsl" />
+    <FxCompile Include="HLSLShader\TextureMappingVertexShader.hlsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\ShaderLoader.inl">
+      <Filter>Header Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

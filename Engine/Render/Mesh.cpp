@@ -109,6 +109,47 @@ namespace GraphicsEngine
         context.IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
     }
 
+    void MeshData::UpdateVertexBuffer(const std::vector<Vertex>& vertices)
+    {
+        // 파라미터 복사.
+//this->vertices.assign(vertices.begin(), vertices.end());
+// Move semantics로 벡터 이동.
+        this->vertices.assign(vertices.begin(), vertices.end());
+
+        // 정점 버퍼가 있으면, 해제 후 재생성.
+        if (vertexBuffer)
+        {
+            vertexBuffer->Release();
+            vertexBuffer = nullptr;
+        }
+
+        D3D11_BUFFER_DESC vertexBufferDesc = {};
+        vertexBufferDesc.ByteWidth = stride * (uint32)this->vertices.size();
+        vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+
+        // 정점 데이터.
+        D3D11_SUBRESOURCE_DATA vertexData = {};
+        vertexData.pSysMem = this->vertices.data();
+
+        // 장치 얻어오기.
+        ID3D11Device& device = Engine::Get().Device();
+
+        // 정점 버퍼 생성.
+        HRESULT result = device.CreateBuffer(&vertexBufferDesc, &vertexData, &vertexBuffer);
+
+        if (FAILED(result))
+        {
+            MessageBoxA(
+                nullptr,
+                "Failed to create vertex buffer",
+                "Error",
+                MB_OK
+            );
+
+            __debugbreak();
+        }
+    }
+
     Mesh::Mesh()
     {
     }
@@ -122,7 +163,7 @@ namespace GraphicsEngine
         for (int ix = 0; ix < (int32)meshes.size(); ++ix)
         {
             meshes[ix]->Bind();
-            shaders[ix]->Bind();
+            shaders[ix].lock()->Bind();
             // 드로우 콜.
             context.DrawIndexed(meshes[ix]->IndexCount(), 0, 0);
         }

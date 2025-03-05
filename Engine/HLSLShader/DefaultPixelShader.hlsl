@@ -6,19 +6,8 @@ struct PixelInput
     
 };
 
-// Texture.
-Texture2D diffuseMap : register(t0);
-SamplerState diffuseSampler : register(s0);
-
 float4 main(PixelInput input) : SV_TARGET
 {
-    // Sampling.
-    float4 textColor = diffuseMap.Sample(diffuseSampler, input.texCoord);
-    
-    float4 finalColor = textColor + float4(input.color, 1.0f);
-    
     //return float4(1.0f, 1.0f, 1.0f, 1.0f);
-    //return float4(input.color, 1.0f);
-    //return float4(input.texCoord.r, 1.0f - input.texCoord.r, input.texCoord.g, 1.0f);
-    return finalColor;
+    return float4(input.color, 1.0f);
 }

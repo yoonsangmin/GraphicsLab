@@ -36,6 +36,12 @@ namespace GraphicsEngine
         // 렌더러 객체.
         std::shared_ptr<class Renderer> renderer;
 
+        // 셰이더 로더 객체.
+        std::unique_ptr<class ShaderLoader> shaderLoader;
+
+        // 텍스처 로더 객체.
+        std::unique_ptr<class TextureLoader> textureLoader;
+
         // 싱글톤 객체.
         static Engine* instance;
     };
