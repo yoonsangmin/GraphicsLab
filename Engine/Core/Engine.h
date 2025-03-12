@@ -42,6 +42,9 @@ namespace GraphicsEngine
         // 텍스처 로더 객체.
         std::unique_ptr<class TextureLoader> textureLoader;
 
+        // 모델 로더 객체.
+        std::unique_ptr<class ModelLoader> modelLoader;
+
         // 싱글톤 객체.
         static Engine* instance;
     };

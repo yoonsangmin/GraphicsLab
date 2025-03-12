@@ -39,8 +39,14 @@ namespace GraphicsEngine
         // 쉐이더 객체.
         //std::unique_ptr<class Shader> shader;
         
-        // 삼각형 메시 객체.
-        std::unique_ptr<class Mesh> mesh;
+        // 메시 객체1.
+        std::unique_ptr<class QuadMesh> mesh1;
+        
+        // 메시 객체2.
+        std::unique_ptr<class QuadMesh> mesh2;
+
+        // 메시 객체3.
+        std::unique_ptr<class TriangleMesh> mesh3;
 
         // @Temp: 임시.
         // 정점 버퍼 (정점 정보를 전달하는 데 사용함).

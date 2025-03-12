@@ -42,7 +42,7 @@ namespace GraphicsEngine
 
     Matrix4 Matrix4::Rotation(float x, float y, float z)
     {
-        return RotationX(x) * RotationY(y) * Rotation(z);
+        return RotationX(x) * RotationY(y) * RotationZ(z);
     }
 
     Matrix4 Matrix4::RotationX(float angle)
@@ -186,9 +186,9 @@ namespace GraphicsEngine
     {
         Vector3 result;
 
-        result.x = vector.x * matrix.m00 + vector.y * matrix.m10 + vector.z * matrix.m20 + matrix.m30;
-        result.y = vector.x * matrix.m01 + vector.y * matrix.m11 + vector.z * matrix.m21 + matrix.m31;
-        result.z = vector.x * matrix.m02 + vector.y * matrix.m12 + vector.z * matrix.m22 + matrix.m32;
+        result.x = vector.x * matrix.m00 + vector.y * matrix.m10 + vector.z * matrix.m20;// + 1.0f * matrix.m30;
+        result.y = vector.x * matrix.m01 + vector.y * matrix.m11 + vector.z * matrix.m21;// + 1.0f * matrix.m31;
+        result.z = vector.x * matrix.m02 + vector.y * matrix.m12 + vector.z * matrix.m22;// + 1.0f * matrix.m32;
 
         return result;
     }

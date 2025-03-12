@@ -1,7 +1,9 @@
 ﻿#include "QuadMesh.h"
-#include "../Shader/Shader.h"
+#include "Shader/Shader.h"
 #include "Shader/TextureMappingShader.h"
+
 #include "Resource/ShaderLoader.h"
+#include "Resource/ModelLoader.h"
 
 #include "Math/Matrix4.h"
 #include "Math/Vector3.h"
@@ -33,11 +35,20 @@ namespace GraphicsEngine
         //vertices[2].position = vertices[2].position * Matrix4::Translation(0.5f, 0.0f, 0.0f);
         //vertices[3].position = vertices[3].position * Matrix4::Translation(0.5f, 0.0f, 0.0f);
 
-        meshes.emplace_back(std::make_shared<MeshData>(std::move(vertices), std::move(indices)));
+        //meshes.emplace_back(std::make_shared<MeshData>(std::move(vertices), std::move(indices)));
+        // 모델 로드.
+        std::weak_ptr<MeshData> mesh;
+        if (ModelLoader::Get().Load("quad.obj", mesh))
+        {
+            meshes.emplace_back(mesh);
+        }
+
         //shaders.emplace_back(std::make_shared<TextureMappingShader>("T_coord.png"));
         std::weak_ptr<TextureMappingShader> shader;
-        ShaderLoader::Get().Load<TextureMappingShader>(shader, "T_coord.png");
-        shaders.emplace_back(shader);
+        if (ShaderLoader::Get().Load<TextureMappingShader>(shader, "T_coord.png"))
+        {
+            shaders.emplace_back(shader);
+        }
     }
 
     void QuadMesh::Update(float deltaTime)
@@ -46,7 +57,11 @@ namespace GraphicsEngine
         static float angle = 0.0f;
         angle += 60.0f * deltaTime;
 
-        Rotate(angle);
+        // 회전 적용.
+        transform.rotation.y = angle;
+        transform.rotation.x = angle;
+
+        //Rotate(angle);
     }
 
     void QuadMesh::Rotate(float angle)
@@ -88,6 +103,6 @@ namespace GraphicsEngine
         result[3].position = result[3].position * Matrix4::Translation(0.5f, 0.0f, 0.0f);
 
         // 메시의 정점 버퍼 업데이트.
-        meshes[0]->UpdateVertexBuffer(result);
+        meshes[0].lock()->UpdateVertexBuffer(result);
     }
 }

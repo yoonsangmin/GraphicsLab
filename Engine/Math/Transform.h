@@ -17,7 +17,7 @@ namespace GraphicsEngine
 
     public:
         // 트랜스폼(변환) 요소(TRS).
-        Vector3 Position = Vector3::Zero;
+        Vector3 position = Vector3::Zero;
         Vector3 rotation = Vector3::Zero;
         Vector3 scale = Vector3::Zero;
 

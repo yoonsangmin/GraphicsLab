@@ -102,6 +102,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Render\Texture.cpp" />
     <ClCompile Include="Render\TriangleMesh.cpp" />
+    <ClCompile Include="Resource\ModelLoader.cpp" />
     <ClCompile Include="Resource\ShaderLoader.cpp" />
     <ClCompile Include="Resource\TextureLoader.cpp" />
     <ClCompile Include="Shader\DefaultShader.cpp" />
@@ -124,6 +125,7 @@
     <ClInclude Include="Core\Window.h" />
     <ClInclude Include="Render\TriangleMesh.h" />
     <ClInclude Include="Render\Vertex.h" />
+    <ClInclude Include="Resource\ModelLoader.h" />
     <ClInclude Include="Resource\ShaderLoader.h" />
     <ClInclude Include="Resource\TextureLoader.h" />
     <ClInclude Include="Shader\DefaultShader.h" />

@@ -15,7 +15,7 @@ namespace GraphicsEngine
         ~ShaderLoader() = default;
 
         template<typename T, typename... Args, typename std::enable_if<std::is_base_of<Shader, T>::value>::type* = nullptr>
-        void Load(std::weak_ptr<T>& outShader, Args... args);
+        bool Load(std::weak_ptr<T>& outShader, Args... args);
 
         static ShaderLoader& Get();
 

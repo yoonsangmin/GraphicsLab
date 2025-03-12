@@ -13,7 +13,7 @@ namespace GraphicsEngine
         TextureLoader();
         ~TextureLoader() = default;
 
-        void Load(const std::string& name, std::weak_ptr<Texture>& outTexture);
+        bool Load(const std::string& name, std::weak_ptr<Texture>& outTexture);
 
         static TextureLoader& Get();
 
