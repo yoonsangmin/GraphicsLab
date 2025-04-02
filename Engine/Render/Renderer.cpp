@@ -3,10 +3,13 @@
 #include <d3dcompiler.h>
 #include "Mesh.h"
 
-#include "../Math/Vector3.h"
+#include "Math/Vector3.h"
 #include "TriangleMesh.h"
 #include "QuadMesh.h"
 #include "Core/Common.h"
+
+#include "Level/Level.h"
+#include "Actor/Actor.h"
 
 namespace GraphicsEngine
 {
@@ -62,6 +65,7 @@ namespace GraphicsEngine
         swapChainDesc.BufferDesc.Height = height;
         swapChainDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
         swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
+        //swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
 
         // 장치 생성.
         //ThrowIfFailed(D3D11CreateDeviceAndSwapChain(
@@ -138,31 +142,8 @@ namespace GraphicsEngine
         }
     }
 
-    void Renderer::Draw()
+    void Renderer::Draw(std::shared_ptr<Level> level)
     {
-        // @임시/Test.
-        if (mesh1 == nullptr)
-        {
-            //mesh = std::make_unique<TriangleMesh>();
-            mesh1 = std::make_unique<QuadMesh>();
-            mesh1->transform.scale = Vector3::One * 0.5f;
-            mesh1->transform.position.x = 0.5f;
-        }
-
-        if (mesh2 == nullptr)
-        {
-            mesh2 = std::make_unique<QuadMesh>();
-            mesh2->transform.scale = Vector3::One * 0.5f;
-            mesh2->transform.position.x = -0.5f;
-        }
-
-        if (mesh3 == nullptr)
-        {
-            mesh3 = std::make_unique<TriangleMesh>();
-            mesh3->transform.scale = Vector3::One * 0.5f;
-            mesh3->transform.position.y = 0.5f;
-        }
-
         // 그리기 전 작업 (BeginScene).
         context->OMSetRenderTargets(1, &renderTargetView, nullptr);
 
@@ -170,14 +151,30 @@ namespace GraphicsEngine
         float color[] = { 0.6f, 0.7f, 0.8f, 1.0f };
         context->ClearRenderTargetView(renderTargetView, color);
 
-        // @Test.
-        mesh1.get()->Update(1.0f / 60.0f);
-        mesh2.get()->Update(1.0f / 60.0f);
+        // Draw.
 
-        // 드로우(Draw) (Draw/Render).
-        mesh1->Draw();
-        mesh2->Draw();
-        mesh3->Draw();
+        // 카메라 바인딩.
+        if (level->GetCamera())
+        {
+            level->GetCamera()->Draw();
+        }
+
+        for (uint32 ix = 0; ix < level->ActorCount(); ++ix)
+        {
+            // 액터 가져오기.
+            auto actor = level->GetActor(ix);
+
+            // Draw.
+            if (actor->IsActive())
+            {
+                //for (const auto& component : actor->components)
+                //{
+                //    // Check if component is drawable.
+                //}
+
+                actor->Draw();
+            }
+        }
 
         // 버퍼 교환 (Endscene/Present).
         swapChain->Present(1u, 0u);

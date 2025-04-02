@@ -1,6 +1,6 @@
 struct PixelInput
 {
-    float4 position : SV_Position;
+    float4 position : SV_POSITION;
     float3 color : COLOR;
     float2 texCoord : TEXCOORD;
     

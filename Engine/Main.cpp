@@ -1,5 +1,6 @@
 ﻿//#include <Windows.h>
 #include "Core/Engine.h"
+#include "Level/DemoLevel.h"
 #include <iostream>
 
 using namespace GraphicsEngine;
@@ -14,24 +15,9 @@ using namespace GraphicsEngine;
 //    return 0;
 //}
 
-#include "Core/Common.h"
-#include <typeinfo>
-#include "Shader/Shader.h"
-#include "Shader/TextureMappingShader.h"
-
-template<typename T, typename std::enable_if<std::is_base_of<Shader, T>::value>::type* = nullptr>
-void TestClass()
-{
-    std::boolalpha(std::cout);
-    std::cout << typeid(T).name() << "\n";
-    std::cout << std::is_base_of<Shader, T>::value << "\n";
-}
-
 int main()
 {
-    //TestClass<TextureMappingShader>();
-    //ThrowIfFailed(E_FAIL, TEXT("Test"));
-
     Engine engine(1280, 800, TEXT("Engine Demo"), GetModuleHandle(nullptr));
+    engine.SetLevel(std::make_shared<DemoLevel>());
     engine.Run();
 }

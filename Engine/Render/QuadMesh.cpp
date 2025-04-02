@@ -44,11 +44,11 @@ namespace GraphicsEngine
         }
 
         //shaders.emplace_back(std::make_shared<TextureMappingShader>("T_coord.png"));
-        std::weak_ptr<TextureMappingShader> shader;
-        if (ShaderLoader::Get().Load<TextureMappingShader>(shader, "T_coord.png"))
-        {
-            shaders.emplace_back(shader);
-        }
+        //std::weak_ptr<TextureMappingShader> shader;
+        //if (ShaderLoader::Get().Load<TextureMappingShader>(shader, "T_coord.png"))
+        //{
+        //    shaders.emplace_back(shader);
+        //}
     }
 
     void QuadMesh::Update(float deltaTime)
@@ -58,8 +58,8 @@ namespace GraphicsEngine
         angle += 60.0f * deltaTime;
 
         // 회전 적용.
-        transform.rotation.y = angle;
-        transform.rotation.x = angle;
+        //transform.rotation.y = angle;
+        //transform.rotation.x = angle;
 
         //Rotate(angle);
     }

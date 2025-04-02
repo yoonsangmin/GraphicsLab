@@ -13,13 +13,14 @@ namespace GraphicsEngine
         Transform();
         ~Transform();
 
+        void Tick();
         void Bind();
 
     public:
         // 트랜스폼(변환) 요소(TRS).
         Vector3 position = Vector3::Zero;
         Vector3 rotation = Vector3::Zero;
-        Vector3 scale = Vector3::Zero;
+        Vector3 scale = Vector3::One;
 
     private:
         // 트랜스폼 행렬.

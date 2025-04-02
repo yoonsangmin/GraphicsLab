@@ -16,11 +16,10 @@ namespace GraphicsEngine
 
         // 인덱스 배열.
         std::vector<uint32> indices = { 0, 1, 2 };
-
         meshes.emplace_back(std::make_shared<MeshData>(std::move(vertices), std::move(indices)));
         //shaders.emplace_back(std::make_shared<Shader>());
-        std::weak_ptr<DefaultShader> shader;
-        ShaderLoader::Get().Load<DefaultShader>(shader);
-        shaders.emplace_back(shader);
+        //std::weak_ptr<DefaultShader> shader;
+        //ShaderLoader::Get().Load<DefaultShader>(shader);
+        //shaders.emplace_back(shader);
     }
 }
