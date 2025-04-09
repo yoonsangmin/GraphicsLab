@@ -9,31 +9,37 @@
 
 namespace GraphicsEngine
 {
-    // 그래픽 카드에서 처리하는 이/리소스를 관리하는 클래스.
-    // RHI - Render Hardware Interface.
-    class Renderer
-    {
-        // 엔진 클래스 firend 선언.
-        friend class Engine;
+	// 그래픽 카드에서 처리하는 이/리소스를 관리하는 클래스.
+	// RHI - Render Hardware Interface.
+	class Renderer
+	{
+		// 엔진 클래스 firend 선언.
+		friend class Engine;
 
-    public:
-        Renderer(uint32 width, uint32 height, HWND window);
-        ~Renderer();
+	public:
+		Renderer(uint32 width, uint32 height, HWND window);
+		~Renderer();
 
-        // 그리기 함수.
-        void Draw(std::shared_ptr<class Level> level);
+		// 그리기 함수.
+		void Draw(std::shared_ptr<class Level> level);
 
-    private:
-        // 리소스.
-        // 장치류.
-        ID3D11Device* device = nullptr;
-        ID3D11DeviceContext* context = nullptr;
-        IDXGISwapChain* swapChain = nullptr;
+		// 크기 변경 함수.
+		void OnResize(uint32 width, uint32 height);
 
-        // 버퍼.
-        ID3D11RenderTargetView* renderTargetView = nullptr;
+	private:
+		// 크기 변경 여부 확인 변수.
+		bool isResizing = false;
 
-        // 뷰포트.
-        D3D11_VIEWPORT viewport;
-    };
+		// 리소스.
+		// 장치류.
+		ID3D11Device* device = nullptr;
+		ID3D11DeviceContext* context = nullptr;
+		IDXGISwapChain* swapChain = nullptr;
+
+		// 버퍼.
+		ID3D11RenderTargetView* renderTargetView = nullptr;
+
+		// 뷰포트.
+		D3D11_VIEWPORT viewport;
+	};
 }

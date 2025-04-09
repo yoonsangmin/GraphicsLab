@@ -12,17 +12,17 @@ namespace GraphicsEngine
 {
     QuadMesh::QuadMesh()
     {
-        // 정점 배열.
-        std::vector<Vertex> vertices =
-        {
-            Vertex(Vector3(-0.5f, 0.5f, 0.5f), Vector3(1.0f, 0.0f, 0.0f), Vector2(0.0f, 0.0f)),
-            Vertex(Vector3(0.5f, 0.5f, 0.5f), Vector3(0.0f, 1.0f, 0.0f), Vector2(1.0f, 0.0f)),
-            Vertex(Vector3(0.5f, -0.5f, 0.5f), Vector3(0.0f, 0.0f, 1.0f), Vector2(1.0f, 1.0f)),
-            Vertex(Vector3(-0.5f, -0.5f, 0.5f), Vector3(1.0f, 1.0f, 0.0f), Vector2(0.0f, 1.0f)),
-        };
+        // // 정점 배열.
+        // std::vector<Vertex> vertices =
+        // {
+        //     Vertex(Vector3(-0.5f, 0.5f, 0.5f), Vector3(1.0f, 0.0f, 0.0f), Vector2(0.0f, 0.0f)),
+        //     Vertex(Vector3(0.5f, 0.5f, 0.5f), Vector3(0.0f, 1.0f, 0.0f), Vector2(1.0f, 0.0f)),
+        //     Vertex(Vector3(0.5f, -0.5f, 0.5f), Vector3(0.0f, 0.0f, 1.0f), Vector2(1.0f, 1.0f)),
+        //     Vertex(Vector3(-0.5f, -0.5f, 0.5f), Vector3(1.0f, 1.0f, 0.0f), Vector2(0.0f, 1.0f)),
+        // };
 
-        // 인덱스 배열.
-        std::vector<uint32> indices = { 0, 1, 2, 0, 2, 3 };
+        // // 인덱스 배열.
+        // std::vector<uint32> indices = { 0, 1, 2, 0, 2, 3 };
 
         // 변환.
         //vertices[0].position = vertices[0].position * Matrix4::Scale(0.5f);
@@ -66,43 +66,43 @@ namespace GraphicsEngine
 
     void QuadMesh::Rotate(float angle)
     {
-        // 정점 배열.
-        std::vector<Vertex> vertices =
-        {
-            Vertex(Vector3(-0.5f, 0.5f, 0.5f), Vector3(1.0f, 0.0f, 0.0f), Vector2(0.0f, 0.0f)),
-            Vertex(Vector3(0.5f, 0.5f, 0.5f), Vector3(0.0f, 1.0f, 0.0f), Vector2(1.0f, 0.0f)),
-            Vertex(Vector3(0.5f, -0.5f, 0.5f), Vector3(0.0f, 0.0f, 1.0f), Vector2(1.0f, 1.0f)),
-            Vertex(Vector3(-0.5f, -0.5f, 0.5f), Vector3(1.0f, 1.0f, 0.0f), Vector2(0.0f, 1.0f)),
-        };
-
-        static std::vector<Vertex> result;
-        static bool hasInitialized = false;
-        if (!hasInitialized)
-        {
-            hasInitialized = true;
-            result.assign(vertices.begin(), vertices.end());
-        }
-
-        // 스케일.
-        result[0].position = vertices[0].position * Matrix4::Scale(0.5f);
-        result[1].position = vertices[1].position * Matrix4::Scale(0.5f);
-        result[2].position = vertices[2].position * Matrix4::Scale(0.5f);
-        result[3].position = vertices[3].position * Matrix4::Scale(0.5f);
-
-        // 회전.
-        Matrix4 rotation = Matrix4::RotationX(angle) * Matrix4::RotationY(angle) * Matrix4::RotationZ(angle);
-        result[0].position = result[0].position * rotation;
-        result[1].position = result[1].position * rotation;
-        result[2].position = result[2].position * rotation;
-        result[3].position = result[3].position * rotation;
-
-        // 이동.
-        result[0].position = result[0].position * Matrix4::Translation(0.5f, 0.0f, 0.0f);
-        result[1].position = result[1].position * Matrix4::Translation(0.5f, 0.0f, 0.0f);
-        result[2].position = result[2].position * Matrix4::Translation(0.5f, 0.0f, 0.0f);
-        result[3].position = result[3].position * Matrix4::Translation(0.5f, 0.0f, 0.0f);
-
-        // 메시의 정점 버퍼 업데이트.
-        meshes[0].lock()->UpdateVertexBuffer(result);
+        // // 정점 배열.
+        // std::vector<Vertex> vertices =
+        // {
+        //     Vertex(Vector3(-0.5f, 0.5f, 0.5f), Vector3(1.0f, 0.0f, 0.0f), Vector2(0.0f, 0.0f)),
+        //     Vertex(Vector3(0.5f, 0.5f, 0.5f), Vector3(0.0f, 1.0f, 0.0f), Vector2(1.0f, 0.0f)),
+        //     Vertex(Vector3(0.5f, -0.5f, 0.5f), Vector3(0.0f, 0.0f, 1.0f), Vector2(1.0f, 1.0f)),
+        //     Vertex(Vector3(-0.5f, -0.5f, 0.5f), Vector3(1.0f, 1.0f, 0.0f), Vector2(0.0f, 1.0f)),
+        // };
+        //
+        // static std::vector<Vertex> result;
+        // static bool hasInitialized = false;
+        // if (!hasInitialized)
+        // {
+        //     hasInitialized = true;
+        //     result.assign(vertices.begin(), vertices.end());
+        // }
+        //
+        // // 스케일.
+        // result[0].position = vertices[0].position * Matrix4::Scale(0.5f);
+        // result[1].position = vertices[1].position * Matrix4::Scale(0.5f);
+        // result[2].position = vertices[2].position * Matrix4::Scale(0.5f);
+        // result[3].position = vertices[3].position * Matrix4::Scale(0.5f);
+        //
+        // // 회전.
+        // Matrix4 rotation = Matrix4::RotationX(angle) * Matrix4::RotationY(angle) * Matrix4::RotationZ(angle);
+        // result[0].position = result[0].position * rotation;
+        // result[1].position = result[1].position * rotation;
+        // result[2].position = result[2].position * rotation;
+        // result[3].position = result[3].position * rotation;
+        //
+        // // 이동.
+        // result[0].position = result[0].position * Matrix4::Translation(0.5f, 0.0f, 0.0f);
+        // result[1].position = result[1].position * Matrix4::Translation(0.5f, 0.0f, 0.0f);
+        // result[2].position = result[2].position * Matrix4::Translation(0.5f, 0.0f, 0.0f);
+        // result[3].position = result[3].position * Matrix4::Translation(0.5f, 0.0f, 0.0f);
+        //
+        // // 메시의 정점 버퍼 업데이트.
+        // meshes[0].lock()->UpdateVertexBuffer(result);
     }
 }

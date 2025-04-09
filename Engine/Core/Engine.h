@@ -8,50 +8,64 @@
 
 namespace GraphicsEngine
 {
-    // 엔진 클래스.
-    class Engine
-    {
-    public:
-        Engine(uint32 width, uint32 height, const std::wstring& title, HINSTANCE hInstance);
-        virtual ~Engine();
+	// 엔진 클래스.
+	class Engine
+	{
+	public:
+		Engine(uint32 width, uint32 height, const std::wstring& title, HINSTANCE hInstance);
+		virtual ~Engine();
 
-        // 엔진 실행 함수.
-        void Run();
+		// 엔진 실행 함수.
+		void Run();
 
-        // 메인 레벨 설정 함수.
-        void SetLevel(std::shared_ptr<class Level> newLevel);
+		// 메인 레벨 설정 함수.
+		void SetLevel(std::shared_ptr<class Level> newLevel);
 
-        // 윈도우 메시지 처리 루프.
-        static LRESULT CALLBACK WindowProc(HWND handle, UINT message, WPARAM wparam, LPARAM lparam);
+		// 윈도우 메시지 처리 루프.
+		static LRESULT CALLBACK WindowProc(HWND handle, UINT message, WPARAM wparam, LPARAM lparam);
 
-        // 싱글톤 접근 함수.
-        static Engine& Get();
+		// 싱글톤 접근 함수.
+		static Engine& Get();
 
-        // Getter.
-        ID3D11Device& Device() const;
-        ID3D11DeviceContext& Context() const;
+		// 화면 크기 변경 이벤트 대응 함수.
+		void OnResize(uint32 width, uint32 height);
 
-    protected:
+		// 엔진 종료 함수.
+		void Quit();
 
-        // 창 객체.
-        std::shared_ptr<class Window> window;
+		// Getter.
+		ID3D11Device& Device() const;
+		ID3D11DeviceContext& Context() const;
 
-        // 렌더러 객체.
-        std::shared_ptr<class Renderer> renderer;
+		uint32 Width() const;
+		uint32 Height() const;
 
-        // 셰이더 로더 객체.
-        std::unique_ptr<class ShaderLoader> shaderLoader;
+	protected:
+		// 엔진 종료 플래그.
+		bool isQuit = false;
 
-        // 텍스처 로더 객체.
-        std::unique_ptr<class TextureLoader> textureLoader;
+		// 입력 관리자 객체.
+		std::unique_ptr<class InputController> inputController;
 
-        // 모델 로더 객체.
-        std::unique_ptr<class ModelLoader> modelLoader;
+		// 창 객체.
+		std::shared_ptr<class Window> window;
 
-        // 메인 레벨.
-        std::shared_ptr<class Level> mainLevel;
+		// 렌더러 객체.
+		std::shared_ptr<class Renderer> renderer;
 
-        // 싱글톤 객체.
-        static Engine* instance;
-    };
+		// 셰이더 로더 객체.
+		std::unique_ptr<class ShaderLoader> shaderLoader;
+
+		// 텍스처 로더 객체.
+		std::unique_ptr<class TextureLoader> textureLoader;
+
+		// 모델 로더 객체.
+		std::unique_ptr<class ModelLoader> modelLoader;
+
+		// 메인 레벨.
+		std::shared_ptr<class Level> mainLevel;
+
+		// 싱글톤 객체.
+		static Engine* instance;
+	};
 }

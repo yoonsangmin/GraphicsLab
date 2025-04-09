@@ -13,170 +13,239 @@
 
 namespace GraphicsEngine
 {
-    Renderer::Renderer(uint32 width, uint32 height, HWND window)
-    {
-        // 장치 생성에 사용하는 옵션.
-        uint32 flag = 0u;
+	Renderer::Renderer(uint32 width, uint32 height, HWND window)
+	{
+		// 장치 생성에 사용하는 옵션.
+		uint32 flag = 0u;
 
 #if _DEBUG
-        flag |= D3D11_CREATE_DEVICE_DEBUG;
+		flag |= D3D11_CREATE_DEVICE_DEBUG;
 #endif
 
-        // 생성할 라이브러리 버전.
-        D3D_FEATURE_LEVEL featureLevels[] =
-        {
-            D3D_FEATURE_LEVEL_11_1,
-            D3D_FEATURE_LEVEL_11_0,
-        };
+		// 생성할 라이브러리 버전.
+		D3D_FEATURE_LEVEL featureLevels[] =
+		{
+			D3D_FEATURE_LEVEL_11_1,
+			D3D_FEATURE_LEVEL_11_0,
+		};
 
-        //// 선택된 D3D_FEATURE_LEVEL 저장 변수.
-        //D3D_FEATURE_LEVEL targetLevel;
-        D3D_FEATURE_LEVEL outFeatureLevel;
+		//// 선택된 D3D_FEATURE_LEVEL 저장 변수.
+		//D3D_FEATURE_LEVEL targetLevel;
+		D3D_FEATURE_LEVEL outFeatureLevel;
 
-        // 장치 생성.
-        ThrowIfFailed(D3D11CreateDevice(
-            nullptr,
-            D3D_DRIVER_TYPE_HARDWARE,
-            nullptr,
-            flag,
-            featureLevels,
-            _countof(featureLevels),
-            D3D11_SDK_VERSION,
-            &device,
-            &outFeatureLevel,
-            &context
-        ), TEXT("Failed to create devices."));
+		// 장치 생성.
+		ThrowIfFailed(D3D11CreateDevice(
+			              nullptr,
+			              D3D_DRIVER_TYPE_HARDWARE,
+			              nullptr,
+			              flag,
+			              featureLevels,
+			              _countof(featureLevels),
+			              D3D11_SDK_VERSION,
+			              &device,
+			              &outFeatureLevel,
+			              &context
+		              ), TEXT("Failed to create devices."));
 
-        // IDXGIFactory 리소스 생성.
-        IDXGIFactory* factory = nullptr;
-        //CreateDXGIFactory(__uuidof(factory), reinterpret_cast<void**>(&factory));
-        ThrowIfFailed(CreateDXGIFactory(IID_PPV_ARGS(&factory)),
-            TEXT("Failed to create dxgifactory."));
+		// IDXGIFactory 리소스 생성.
+		IDXGIFactory* factory = nullptr;
+		//CreateDXGIFactory(__uuidof(factory), reinterpret_cast<void**>(&factory));
+		ThrowIfFailed(CreateDXGIFactory(IID_PPV_ARGS(&factory)),
+		              TEXT("Failed to create dxgifactory."));
 
-        // 스왑 체인 정보 구조체.
-        DXGI_SWAP_CHAIN_DESC swapChainDesc = { };
-        swapChainDesc.Windowed = true;      // 창 모드?.
-        swapChainDesc.OutputWindow = window;
-        swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-        swapChainDesc.BufferCount = 2;      // 백버퍼 개수.
-        swapChainDesc.SampleDesc.Count = 1; // 멀티 샘플링 개수 - 안티 앨리어싱 관련.
-        swapChainDesc.SampleDesc.Quality = 0; // 멀티 샘플링 수준 (일반적으로 Count - 1).
-        swapChainDesc.BufferDesc.Width = width;
-        swapChainDesc.BufferDesc.Height = height;
-        swapChainDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-        swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
-        //swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
+		// 스왑 체인 정보 구조체.
+		DXGI_SWAP_CHAIN_DESC swapChainDesc = {};
+		swapChainDesc.Windowed = true; // 창 모드?.
+		swapChainDesc.OutputWindow = window;
+		swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+		swapChainDesc.BufferCount = 2; // 백버퍼 개수.
+		swapChainDesc.SampleDesc.Count = 1; // 멀티 샘플링 개수 - 안티 앨리어싱 관련.
+		swapChainDesc.SampleDesc.Quality = 0; // 멀티 샘플링 수준 (일반적으로 Count - 1).
+		swapChainDesc.BufferDesc.Width = width;
+		swapChainDesc.BufferDesc.Height = height;
+		swapChainDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+		swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
+		//swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
 
-        // 장치 생성.
-        //ThrowIfFailed(D3D11CreateDeviceAndSwapChain(
-        //    nullptr,
-        //    D3D_DRIVER_TYPE_HARDWARE,
-        //    nullptr,
-        //    flag,
-        //    featureLevels,
-        //    _countof(featureLevels),
-        //    D3D11_SDK_VERSION,
-        //    &swapChainDesc,
-        //    &swapChain,
-        //    &device,
-        //    nullptr,
-        //    &context
-        //), TEXT("Failed to create devices."));
+		// 장치 생성.
+		//ThrowIfFailed(D3D11CreateDeviceAndSwapChain(
+		//    nullptr,
+		//    D3D_DRIVER_TYPE_HARDWARE,
+		//    nullptr,
+		//    flag,
+		//    featureLevels,
+		//    _countof(featureLevels),
+		//    D3D11_SDK_VERSION,
+		//    &swapChainDesc,
+		//    &swapChain,
+		//    &device,
+		//    nullptr,
+		//    &context
+		//), TEXT("Failed to create devices."));
 
-        // SwapChaing 생성.
-        ThrowIfFailed(factory->CreateSwapChain(
-            device, 
-            &swapChainDesc, 
-            &swapChain
-        ), TEXT("Failed to create a swap chain."));
+		// SwapChaing 생성.
+		ThrowIfFailed(factory->CreateSwapChain(
+			              device,
+			              &swapChainDesc,
+			              &swapChain
+		              ), TEXT("Failed to create a swap chain."));
 
-        // 렌더 타겟 뷰 생성.
-        ID3D11Texture2D* backbuffer = nullptr;
-        //swapChain->GetBuffer(0, __uuidof(backbuffer), reinterpret_cast<void**>(&backbuffer));
-        // 위의 작업을 IID_PPV_ARGS 매크로가 대신 해줌.
-        ThrowIfFailed(swapChain->GetBuffer(
-            0, 
-            IID_PPV_ARGS(&backbuffer)
-        ), TEXT("Failed to get back buffer."));
+		// 렌더 타겟 뷰 생성.
+		ID3D11Texture2D* backbuffer = nullptr;
+		//swapChain->GetBuffer(0, __uuidof(backbuffer), reinterpret_cast<void**>(&backbuffer));
+		// 위의 작업을 IID_PPV_ARGS 매크로가 대신 해줌.
+		ThrowIfFailed(swapChain->GetBuffer(
+			              0,
+			              IID_PPV_ARGS(&backbuffer)
+		              ), TEXT("Failed to get back buffer."));
 
-        ThrowIfFailed(device->CreateRenderTargetView(
-            backbuffer, nullptr, &renderTargetView
-        ), TEXT("Failed to create render target view."));
+		ThrowIfFailed(device->CreateRenderTargetView(
+			              backbuffer, nullptr, &renderTargetView
+		              ), TEXT("Failed to create render target view."));
 
-        // 렌더 타겟 뷰 바인딩(연결).
-        // 오류 날 수도 있음. GetLastError로 검출.
-        //context->OMSetRenderTargets(1, &renderTargetView, nullptr);
+		// 사용한 리소스 해제.
+		backbuffer->Release();
+		backbuffer = nullptr;
 
-        // 뷰포트(화면).
-        viewport.TopLeftX = 0.0f;
-        viewport.TopLeftY = 0.0f;
-        viewport.Width = (float)width;
-        viewport.Height = (float)height;
-        viewport.MaxDepth = 1.0f;
-        viewport.MinDepth = 0.0f;
+		// 렌더 타겟 뷰 바인딩(연결).
+		// 오류 날 수도 있음. GetLastError로 검출.
+		//context->OMSetRenderTargets(1, &renderTargetView, nullptr);
 
-        // 뷰포트 설정.
-        context->RSSetViewports(1, &viewport);
-    }
+		// 뷰포트(화면).
+		viewport.TopLeftX = 0.0f;
+		viewport.TopLeftY = 0.0f;
+		viewport.Width = (float)width;
+		viewport.Height = (float)height;
+		viewport.MaxDepth = 1.0f;
+		viewport.MinDepth = 0.0f;
 
-    Renderer::~Renderer()
-    {
-        if (device)
-        {
-            device->Release();
-        }
+		// 뷰포트 설정.
+		context->RSSetViewports(1, &viewport);
+	}
 
-        if (context)
-        {
-            context->Release();
-        }
+	Renderer::~Renderer()
+	{
+		// DX 리소스 해제.
+		if (context)
+		{
+			context->Release();
+			context = nullptr;
+		}
+		if (swapChain)
+		{
+			swapChain->Release();
+			swapChain = nullptr;
+		}
+		if (renderTargetView)
+		{
+			renderTargetView->Release();
+			renderTargetView = nullptr;
+		}
+		if (device)
+		{
+			device->Release();
+			device = nullptr;
+		}
+	}
 
-        if (swapChain)
-        {
-            swapChain->Release();
-        }
+	void Renderer::Draw(std::shared_ptr<Level> level)
+	{
+		// 화면 크기 변경 중일 때는 종료.
+		if (isResizing)
+		{
+			return;
+		}
 
-        if (renderTargetView)
-        {
-            renderTargetView->Release();
-        }
-    }
+		// 그리기 전 작업 (BeginScene).
+		context->OMSetRenderTargets(1, &renderTargetView, nullptr);
 
-    void Renderer::Draw(std::shared_ptr<Level> level)
-    {
-        // 그리기 전 작업 (BeginScene).
-        context->OMSetRenderTargets(1, &renderTargetView, nullptr);
+		// 지우기(Clear).
+		float color[] = {0.6f, 0.7f, 0.8f, 1.0f};
+		context->ClearRenderTargetView(renderTargetView, color);
 
-        // 지우기(Clear).
-        float color[] = { 0.6f, 0.7f, 0.8f, 1.0f };
-        context->ClearRenderTargetView(renderTargetView, color);
+		// Draw.
 
-        // Draw.
+		// 카메라 바인딩.
+		if (level->GetCamera())
+		{
+			level->GetCamera()->Draw();
+		}
 
-        // 카메라 바인딩.
-        if (level->GetCamera())
-        {
-            level->GetCamera()->Draw();
-        }
+		for (uint32 ix = 0; ix < level->ActorCount(); ++ix)
+		{
+			// 액터 가져오기.
+			auto actor = level->GetActor(ix);
 
-        for (uint32 ix = 0; ix < level->ActorCount(); ++ix)
-        {
-            // 액터 가져오기.
-            auto actor = level->GetActor(ix);
+			// Draw.
+			if (actor->IsActive())
+			{
+				//for (const auto& component : actor->components)
+				//{
+				//    // Check if component is drawable.
+				//}
 
-            // Draw.
-            if (actor->IsActive())
-            {
-                //for (const auto& component : actor->components)
-                //{
-                //    // Check if component is drawable.
-                //}
+				actor->Draw();
+			}
+		}
 
-                actor->Draw();
-            }
-        }
+		// 버퍼 교환 (Endscene/Present).
+		swapChain->Present(1u, 0u);
+	}
 
-        // 버퍼 교환 (Endscene/Present).
-        swapChain->Present(1u, 0u);
-    }
+	void Renderer::OnResize(uint32 width, uint32 height)
+	{
+		// 창 변경으로 인한 리소스 크기 조정.
+		if (!device || !context || !swapChain)
+		{
+			return;
+		}
+		
+		isResizing = true;
+
+		// context 비우기.
+		context->ClearState();
+		context->Flush();
+		
+		// 렌더 타겟 해제.
+		if (renderTargetView)
+		{
+			renderTargetView->Release();
+			renderTargetView = nullptr;
+		}
+
+		// 스왑 체인 백버퍼 크기 변경.
+		// 0인 경우 현재 사용 중인 백버퍼 개수 사용.
+		ThrowIfFailed(
+			swapChain->ResizeBuffers(0, width, height, DXGI_FORMAT_R8G8B8A8_UNORM, 0),
+			TEXT("Failed to resize swapchain buffer.")
+		)
+
+		// 렌더타겟 재생성.
+		ID3D11Texture2D* backbuffer = nullptr;
+		ThrowIfFailed(
+			swapChain->GetBuffer(0, IID_PPV_ARGS(&backbuffer)),
+			TEXT("Failed to get buffer from swapchain.")
+		)
+
+		ThrowIfFailed(
+			device->CreateRenderTargetView(backbuffer, nullptr, &renderTargetView),
+			TEXT("Failed to created render target view.")
+		)
+
+		backbuffer->Release();
+		backbuffer = nullptr;
+
+		// 뷰포트 업데이트.
+		viewport.TopLeftX = 0.0f;
+		viewport.TopLeftY = 0.0f;
+		viewport.Width = (float)width;
+		viewport.Height = (float)height;
+		viewport.MaxDepth = 1.0f;
+		viewport.MinDepth = 0.0f;
+
+		// 뷰포트 설정.
+		context->RSSetViewports(1, &viewport);
+		
+		isResizing = false;
+	}
 }

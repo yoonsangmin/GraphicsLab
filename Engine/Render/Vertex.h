@@ -7,8 +7,8 @@ namespace GraphicsEngine
 {
     struct Vertex
     {
-        Vertex(const Vector3& position, const Vector3& color, const Vector2& textCoord)
-            : position(position), color(color), textCoord(textCoord)
+        Vertex(const Vector3& position, const Vector3& color, const Vector2& textCoord, const Vector3& normal)
+            : position(position), color(color), textCoord(textCoord), normal(normal)
         {
         }
 
@@ -22,5 +22,8 @@ namespace GraphicsEngine
         
         // 정점 기준 텍스처 좌표.
         Vector2 textCoord;
+
+        // 노멀 (법선, Normal) 벡터.
+        Vector3 normal;
     };
 }
