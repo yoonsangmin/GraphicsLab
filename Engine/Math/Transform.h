@@ -3,6 +3,7 @@
 #include "Vector3.h"
 #include "Matrix4.h"
 #include <d3d11.h>
+#include <vector>
 
 namespace GraphicsEngine
 {
@@ -15,6 +16,11 @@ namespace GraphicsEngine
 
         void Tick();
         void Bind();
+
+        // 방향 벡터 함수.
+        Vector3 Right();
+        Vector3 Up();
+        Vector3 Forward();
 
     public:
         // 트랜스폼(변환) 요소(TRS).

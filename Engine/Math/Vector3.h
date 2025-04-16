@@ -65,10 +65,10 @@ namespace GraphicsEngine
         float LengthSquared();
         
         // 내적(Dot Product/Inner Product).
-        static float Dot(const Vector3& left, const Vector3& right);
+        friend float Dot(const Vector3& left, const Vector3& right);
         
         // 외적(Cross Product/Outer Product).
-        static Vector3 Cross(const Vector3& left, const Vector3& right);
+        friend Vector3 Cross(const Vector3& left, const Vector3& right);
 
         Vector3 Normalized();
         bool Equals(const Vector3& other);

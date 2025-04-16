@@ -103,12 +103,12 @@ namespace GraphicsEngine
         return x * x + y * y + z * z;
     }
 
-    float Vector3::Dot(const Vector3& left, const Vector3& right)
+    float Dot(const Vector3& left, const Vector3& right)
     {
         return left.x * right.x + left.y * right.y + left.z * right.z;
     }
 
-    Vector3 Vector3::Cross(const Vector3& left, const Vector3& right)
+    Vector3 Cross(const Vector3& left, const Vector3& right)
     {
         return Vector3
         (

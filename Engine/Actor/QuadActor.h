@@ -4,10 +4,10 @@
 
 namespace GraphicsEngine
 {
-    class QuadActor : public Actor
-    {
-    public:
-        QuadActor();
-        ~QuadActor() = default;
-    };
+	class QuadActor : public Actor
+	{
+	public:
+		QuadActor();
+		~QuadActor() = default;
+	};
 }
