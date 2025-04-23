@@ -51,7 +51,7 @@ namespace GraphicsEngine
         Texture(const std::string& name, BindType bindType = BindType::PixelShader, uint32 index = 0u);
         ~Texture();
 
-        void Bind();
+        void Bind(uint32 index = 0u);
 
     private:
         void LoadTexture(const std::string& name);
@@ -61,7 +61,7 @@ namespace GraphicsEngine
         std::string name;
         
         // 텍스처 순번.
-        uint32 index = 0u;
+        //uint32 index = 0u;
         
         // 바인딩 셰이더 타입.
         BindType bindType = BindType::PixelShader;

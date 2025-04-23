@@ -13,7 +13,7 @@ namespace GraphicsEngine
     }
 
     Texture::Texture(const std::string& name, BindType bindType, uint32 index)
-        : name(name), bindType(bindType), index(index)
+        : name(name), bindType(bindType)/*, index(index)*/
     {
         LoadTexture(name);
     }
@@ -22,7 +22,7 @@ namespace GraphicsEngine
     {
     }
 
-    void Texture::Bind()
+    void Texture::Bind(uint32 index)
     {
         // 예외 처리.
         if (!textureData)
