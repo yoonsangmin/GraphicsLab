@@ -3,22 +3,29 @@
 #include <string>
 #include <unordered_map>
 #include <memory>
+#include "Core/Type.h"
 
 namespace GraphicsEngine
 {
-    class Texture;
-    class TextureLoader
-    {
-    public:
-        TextureLoader();
-        ~TextureLoader() = default;
+	class Texture;
+	class RenderTexture;
+	class TextureLoader
+	{
+		friend class Renderer;
 
-        bool Load(const std::string& name, std::weak_ptr<Texture>& outTexture);
+	public:
+		TextureLoader();
+		~TextureLoader() = default;
 
-        static TextureLoader& Get();
+		bool Load(const std::string& name, std::weak_ptr<Texture>& outTexture);
+		void GetNewRenderTexture(std::weak_ptr<RenderTexture>& outTexture, uint32 width = 0, uint32 height = 0);
 
-    private:
-        static TextureLoader* instance;
-        std::unordered_map<std::string, std::shared_ptr<Texture>> textures;
-    };
+		static TextureLoader& Get();
+
+	private:
+		static TextureLoader* instance;
+
+		std::unordered_map<std::string, std::shared_ptr<Texture>> textures;
+		std::vector<std::shared_ptr<RenderTexture>> renderTextures;
+	};
 }

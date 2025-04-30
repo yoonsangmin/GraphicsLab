@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 // DirectX11 헤더.
 #include <d3d11.h>
@@ -6,6 +6,7 @@
 #include <memory>
 
 #include "Core/Type.h"
+#include <iostream>
 
 namespace GraphicsEngine
 {
@@ -26,6 +27,10 @@ namespace GraphicsEngine
 		// 크기 변경 함수.
 		void OnResize(uint32 width, uint32 height);
 
+	private:
+		// 셰이더에 바인딩된 RTV 및 SRV를 해제하는 함수.
+		void EmptyRTVsAndSRVs();
+		
 	private:
 		// 크기 변경 여부 확인 변수.
 		bool isResizing = false;

@@ -1,15 +1,12 @@
-﻿#include "Renderer.h"
-#include <vector>
-#include <d3dcompiler.h>
-#include "Mesh.h"
-
-#include "Math/Vector3.h"
-#include "TriangleMesh.h"
-#include "QuadMesh.h"
+#include "Renderer.h"
 #include "Core/Common.h"
 
 #include "Level/Level.h"
 #include "Actor/Actor.h"
+
+#include "RenderTexture.h"
+#include "Resource/TextureLoader.h"
+#include "Component/StaticMeshComponent.h"
 
 namespace GraphicsEngine
 {
@@ -45,13 +42,13 @@ namespace GraphicsEngine
 			              &device,
 			              &outFeatureLevel,
 			              &context
-		              ), TEXT("Failed to create devices."));
+		              ), TEXT("Failed to create devices."))
 
 		// IDXGIFactory 리소스 생성.
 		IDXGIFactory* factory = nullptr;
 		//CreateDXGIFactory(__uuidof(factory), reinterpret_cast<void**>(&factory));
 		ThrowIfFailed(CreateDXGIFactory(IID_PPV_ARGS(&factory)),
-		              TEXT("Failed to create dxgifactory."));
+		              TEXT("Failed to create dxgifactory."))
 
 		// 스왑 체인 정보 구조체.
 		DXGI_SWAP_CHAIN_DESC swapChainDesc = {};
@@ -88,7 +85,7 @@ namespace GraphicsEngine
 			              device,
 			              &swapChainDesc,
 			              &swapChain
-		              ), TEXT("Failed to create a swap chain."));
+		              ), TEXT("Failed to create a swap chain."))
 
 		// 렌더 타겟 뷰 생성.
 		ID3D11Texture2D* backbuffer = nullptr;
@@ -97,11 +94,11 @@ namespace GraphicsEngine
 		ThrowIfFailed(swapChain->GetBuffer(
 			              0,
 			              IID_PPV_ARGS(&backbuffer)
-		              ), TEXT("Failed to get back buffer."));
+		              ), TEXT("Failed to get back buffer."))
 
 		ThrowIfFailed(device->CreateRenderTargetView(
 			              backbuffer, nullptr, &renderTargetView
-		              ), TEXT("Failed to create render target view."));
+		              ), TEXT("Failed to create render target view."))
 
 		// 사용한 리소스 해제.
 		backbuffer->Release();
@@ -193,7 +190,64 @@ namespace GraphicsEngine
 			return;
 		}
 
+		// Phase-1.
+		for (int ix = 0; ix < (int)TextureLoader::Get().renderTextures.size(); ++ix)
+		{
+			// 렌더 텍스처 가져오기.
+			auto renderTexture = TextureLoader::Get().renderTextures[ix];
+			
+			EmptyRTVsAndSRVs();
+			
+			// 렌더 타겟 설정.
+			context->OMSetRenderTargets(
+				1,
+				renderTexture->GetRenderTargetAddress(),
+				renderTexture->GetDepthStencilView()
+			);
+			
+			// 지우기(Clear).
+			
+			float color[] = {1.0f, 1.0f, 1.0f, 1.0f};
+			context->ClearRenderTargetView(renderTexture->GetRenderTarget(), color);
+			context->ClearDepthStencilView(
+				renderTexture->GetDepthStencilView(),
+				D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL,
+				1.0f,
+				0
+			);
+
+			// 그리기.
+			// 카메라 바인딩.
+			if (level->GetCamera())
+			{
+				level->GetCamera()->Draw();
+			}
+
+			for (uint32 actorIndex = 0; actorIndex < level->ActorCount(); ++actorIndex)
+			{
+				// 액터 가져오기.
+				auto actor = level->GetActor(actorIndex);
+
+				// 렌더 텍스처 사용 여부 확인.
+				auto meshComp = actor->GetComponent<StaticMeshComponent>();
+				if (meshComp && meshComp->UseRenderTexture())
+				{
+					continue;
+				}
+				
+				// Draw.
+				if (actor->IsActive())
+				{
+					actor->Draw();
+				}
+			}
+		}
+		
+		// Final-Phase.
 		// 그리기 전 작업 (BeginScene).
+
+		EmptyRTVsAndSRVs();
+		
 		context->OMSetRenderTargets(1, &renderTargetView, depthStencilView);
 
 		// 지우기(Clear).
@@ -330,5 +384,14 @@ namespace GraphicsEngine
 		context->RSSetViewports(1, &viewport);
 
 		isResizing = false;
+	}
+
+	void Renderer::EmptyRTVsAndSRVs()
+	{
+		static ID3D11RenderTargetView* nullRTV[8] = {};
+		context->OMSetRenderTargets(8, nullRTV, nullptr);
+
+		static ID3D11ShaderResourceView* nullSRVs[16] = {};
+		context->PSSetShaderResources(0, _countof(nullSRVs), nullSRVs);
 	}
 }

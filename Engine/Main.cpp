@@ -3,6 +3,10 @@
 #include "Level/DemoLevel.h"
 #include <iostream>
 
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+
 using namespace GraphicsEngine;
 
 // 창 모드로 할 때 메인 함수(Entry Point).
@@ -17,7 +21,9 @@ using namespace GraphicsEngine;
 
 int main()
 {
-    Engine engine(1280, 800, TEXT("Engine Demo"), GetModuleHandle(nullptr));
-    engine.SetLevel(std::make_shared<DemoLevel>());
-    engine.Run();
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
+	Engine engine(1280, 800, TEXT("Engine Demo"), GetModuleHandle(nullptr));
+	engine.SetLevel(std::make_shared<DemoLevel>());
+	engine.Run();
 }

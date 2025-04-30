@@ -2,6 +2,7 @@
 
 #include "Actor/Actor.h"
 #include "Actor/QuadActor.h"
+#include "Actor/SphereActor.h"
 #include "Actor/CameraActor.h"
 
 #include "Math/Transform.h"
@@ -25,13 +26,15 @@ namespace GraphicsEngine
         // 데모 씬(레벨) 구성.
 
         // 액터 생성.
-        std::shared_ptr<QuadActor> actor = std::make_shared<QuadActor>();
+        std::shared_ptr<SphereActor> actor = std::make_shared<SphereActor>();
         //actor->transform.scale = Vector3::One * 0.5f;
         actor->transform.position.x = -1.0f;
 
         std::shared_ptr<QuadActor> actor2 = std::make_shared<QuadActor>();
-        //actor2->transform.scale = Vector3::One * 0.5f;
         actor2->transform.position.x = 1.0f;
+
+        std::shared_ptr<QuadActor> actor3 = std::make_shared<QuadActor>();
+        actor3->transform.position.x = 2.0f;
 
         // 카메라 액터 생성.
         // std::shared_ptr<Actor> cameraActor = std::make_shared<Actor>();
@@ -45,7 +48,8 @@ namespace GraphicsEngine
 
         // 액터를 레벨에 추가.
         AddActor(actor);
-        //AddActor(actor2);
+        AddActor(actor2);
+        AddActor(actor3);
         AddActor(cameraActor);
     }
 

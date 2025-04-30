@@ -6,7 +6,7 @@ struct PixelInput
 	float3 color : COLOR;
 	float2 texCoord : TEXCOORD;
 	float3 normal : NORMAL;
-	float3 cameraDirection : TEXTCOORD1;
+	float3 cameraDirection : TEXCOORD1;
 	float3 tangent : TANGENT;
 	float3 bitangent : BITANGENT;
 };

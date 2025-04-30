@@ -93,6 +93,81 @@
     <ClCompile Include="Actor\Actor.cpp" />
     <ClCompile Include="Actor\CameraActor.cpp" />
     <ClCompile Include="Actor\QuadActor.cpp" />
+    <ClCompile Include="Actor\SphereActor.cpp">
+      <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <Optimization>Disabled</Optimization>
+      <SupportJustMyCode>true</SupportJustMyCode>
+      <AssemblerOutput>NoListing</AssemblerOutput>
+      <AssemblerListingLocation>C:\Workspace\OtherProjects\GraphicsLab\Intermediate\x64\Debug\Engine\</AssemblerListingLocation>
+      <UndefineAllPreprocessorDefinitions>false</UndefineAllPreprocessorDefinitions>
+      <BrowseInformation>false</BrowseInformation>
+      <BrowseInformationFile>C:\Workspace\OtherProjects\GraphicsLab\Intermediate\x64\Debug\Engine\</BrowseInformationFile>
+      <CompileAs>Default</CompileAs>
+      <ConformanceMode>true</ConformanceMode>
+      <DiagnosticsFormat>Column</DiagnosticsFormat>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
+      <ErrorReporting>Prompt</ErrorReporting>
+      <ExpandAttributedSource>false</ExpandAttributedSource>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <EnableASAN>false</EnableASAN>
+      <EnableFuzzer>false</EnableFuzzer>
+      <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Precise</FloatingPointModel>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <GenerateModuleDependencies>false</GenerateModuleDependencies>
+      <GenerateSourceDependencies>false</GenerateSourceDependencies>
+      <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
+      <LanguageStandard>Default</LanguageStandard>
+      <LanguageStandard_C>Default</LanguageStandard_C>
+      <MinimalRebuild>false</MinimalRebuild>
+      <ModuleDependenciesFile>C:\Workspace\OtherProjects\GraphicsLab\Intermediate\x64\Debug\Engine\</ModuleDependenciesFile>
+      <ModuleOutputFile>C:\Workspace\OtherProjects\GraphicsLab\Intermediate\x64\Debug\Engine\</ModuleOutputFile>
+      <OmitDefaultLibName>false</OmitDefaultLibName>
+      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <ObjectFileName>C:\Workspace\OtherProjects\GraphicsLab\Intermediate\x64\Debug\Engine\</ObjectFileName>
+      <CallingConvention>Cdecl</CallingConvention>
+      <ProgramDataBaseFileName>C:\Workspace\OtherProjects\GraphicsLab\Intermediate\x64\Debug\Engine\vc143.pdb</ProgramDataBaseFileName>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>C:\Workspace\OtherProjects\GraphicsLab\Intermediate\x64\Debug\Engine\Engine.pch</PrecompiledHeaderOutputFile>
+      <PreprocessToFile>false</PreprocessToFile>
+      <PreprocessKeepComments>false</PreprocessKeepComments>
+      <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
+      <RemoveUnreferencedCodeData>true</RemoveUnreferencedCodeData>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+      <ShowIncludes>false</ShowIncludes>
+      <SourceDependenciesFile>C:\Workspace\OtherProjects\GraphicsLab\Intermediate\x64\Debug\Engine\</SourceDependenciesFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <SmallerTypeCheck>false</SmallerTypeCheck>
+      <SpectreMitigation>false</SpectreMitigation>
+      <StructMemberAlignment>Default</StructMemberAlignment>
+      <TrackerLogDirectory>C:\Workspace\OtherProjects\GraphicsLab\Intermediate\x64\Debug\Engine\Engine.tlog\</TrackerLogDirectory>
+      <TranslateIncludes>false</TranslateIncludes>
+      <MinimalRebuildFromTracking>true</MinimalRebuildFromTracking>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <UseFullPaths>true</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <XMLDocumentationFileName>C:\Workspace\OtherProjects\GraphicsLab\Intermediate\x64\Debug\Engine\</XMLDocumentationFileName>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <IntelJCCErratum>false</IntelJCCErratum>
+      <BuildStlModules>false</BuildStlModules>
+      <TreatAngleIncludeAsExternal>false</TreatAngleIncludeAsExternal>
+      <ExternalWarningLevel>InheritWarningLevel</ExternalWarningLevel>
+      <TreatExternalTemplatesAsInternal>true</TreatExternalTemplatesAsInternal>
+      <DisableAnalyzeExternal>false</DisableAnalyzeExternal>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;_UNICODE;UNICODE;</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Workspace\OtherProjects\GraphicsLab\Engine\\;</AdditionalIncludeDirectories>
+      <LinkCompiled>true</LinkCompiled>
+    </ClCompile>
     <ClCompile Include="Component\CameraComponent.cpp" />
     <ClCompile Include="Component\Component.cpp" />
     <ClCompile Include="Component\StaticMeshComponent.cpp" />
@@ -124,6 +199,7 @@
     <ClCompile Include="Render\Renderer.cpp" />
     <ClCompile Include="Core\Window.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Render\RenderTexture.cpp" />
     <ClCompile Include="Render\SphereMesh.cpp" />
     <ClCompile Include="Render\Texture.cpp" />
     <ClCompile Include="Render\TriangleMesh.cpp" />
@@ -140,6 +216,7 @@
     <ClInclude Include="Actor\Actor.h" />
     <ClInclude Include="Actor\CameraActor.h" />
     <ClInclude Include="Actor\QuadActor.h" />
+    <ClInclude Include="Actor\SphereActor.h" />
     <ClInclude Include="Component\CameraComponent.h" />
     <ClInclude Include="Component\Component.h" />
     <ClInclude Include="Component\StaticMeshComponent.h" />
@@ -158,6 +235,7 @@
     <ClInclude Include="Render\Renderer.h" />
     <ClInclude Include="Core\Type.h" />
     <ClInclude Include="Core\Window.h" />
+    <ClInclude Include="Render\RenderTexture.h" />
     <ClInclude Include="Render\SphereMesh.h" />
     <ClInclude Include="Render\TriangleMesh.h" />
     <ClInclude Include="Render\Vertex.h" />
